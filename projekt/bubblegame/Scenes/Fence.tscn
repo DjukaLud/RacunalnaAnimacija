@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnlfe3l6gvyf4"]
+
+[ext_resource type="Texture2D" uid="uid://bliacfr04x5m8" path="res://Assets/wooden-textured-background.jpg" id="1_cffo5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kcsqd"]
+albedo_texture = ExtResource("1_cffo5")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ojmnu"]
+material = SubResource("StandardMaterial3D_kcsqd")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7qem"]
+
+[node name="Fence" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -1, 0.5, 0)
+mesh = SubResource("BoxMesh_ojmnu")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, 1, 0.5, 0)
+mesh = SubResource("BoxMesh_ojmnu")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-09, -2, 0, 0.1, -8.74228e-08, 0, 0, 0, 0.2, 0, 0.7, 0)
+mesh = SubResource("BoxMesh_ojmnu")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-09, -2, 0, 0.1, -8.74228e-08, 0, 0, 0, 0.2, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_ojmnu")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 0.4, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_g7qem")

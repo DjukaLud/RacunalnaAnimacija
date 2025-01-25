@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbby05qd7teh7"]
+
+[ext_resource type="Script" path="res://Scripts/stone_pick_up.gd" id="1_wcyf1"]
+[ext_resource type="PackedScene" uid="uid://beyvqtj0uyscn" path="res://Scenes/Crate.tscn" id="2_i766n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_slgmr"]
+
+[node name="StonePickUp" type="Node3D"]
+script = ExtResource("1_wcyf1")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="Crate" parent="Area3D" instance=ExtResource("2_i766n")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_slgmr")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

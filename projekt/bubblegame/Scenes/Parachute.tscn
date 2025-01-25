@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwtxrgamxs4g8"]
+
+[ext_resource type="PackedScene" uid="uid://beyvqtj0uyscn" path="res://Scenes/Crate.tscn" id="1_3oont"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y56vy"]
+transparency = 1
+albedo_color = Color(0.564706, 0, 0.0862745, 0.952941)
+
+[sub_resource type="SphereMesh" id="SphereMesh_r1fll"]
+height = 0.4
+is_hemisphere = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqb8y"]
+
+[node name="Parachute" type="Node3D"]
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44509, 0)
+material_override = SubResource("StandardMaterial3D_y56vy")
+mesh = SubResource("SphereMesh_r1fll")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.00954099, -0.449236, 0, 0.0029949, 1.43115, 0, 0, 0, 0.01, -0.244193, 0.731594, 0)
+mesh = SubResource("BoxMesh_dqb8y")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-4.17112e-10, 1.96072e-08, 0.01, 0.00299041, 1.43136, 0, -0.0095424, 0.448561, -4.37114e-10, -0.00445369, 0.731594, 0.226246)
+mesh = SubResource("BoxMesh_dqb8y")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-0.0095424, 0.448561, -8.74228e-10, 0.00299041, 1.43136, 0, 8.34223e-10, -3.92145e-08, -0.01, 0.231322, 0.731594, -6.67572e-06)
+mesh = SubResource("BoxMesh_dqb8y")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-4.17112e-10, 1.96072e-08, -0.01, 0.00299041, 1.43136, 0, 0.0095424, -0.448561, -4.37114e-10, -0.00507781, 0.731594, -0.229105)
+mesh = SubResource("BoxMesh_dqb8y")
+skeleton = NodePath("../..")
+
+[node name="Crate" parent="." instance=ExtResource("1_3oont")]

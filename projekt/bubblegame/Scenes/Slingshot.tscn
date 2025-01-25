@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://bn16lvqbbfmh7"]
+
+[ext_resource type="PackedScene" uid="uid://cjovooorssuxk" path="res://Models/Slingshot/Slingshot.glb" id="1_7nq06"]
+
+[sub_resource type="Animation" id="Animation_hl8g5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_48jbc"]
+resource_name = "Shoot"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.01, 0.88, 0.97),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kpmuj"]
+_data = {
+"RESET": SubResource("Animation_hl8g5"),
+"Shoot": SubResource("Animation_48jbc")
+}
+
+[node name="Slingshot" instance=ExtResource("1_7nq06")]
+
+[node name="Node" parent="." index="0"]
+transform = Transform3D(0.980436, 0, 0.196836, 0, 1, 0, -0.196836, 0, 0.980436, 0, 0, 0)
+cast_shadow = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_kpmuj")
+}
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="2"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+target_position = Vector3(1, 0, 0)

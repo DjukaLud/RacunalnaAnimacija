@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dm0s2cn0pjogl"]
+
+[ext_resource type="Script" path="res://Scripts/Bubble.gd" id="1_1fp0o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ma2mw"]
+transparency = 1
+albedo_color = Color(0.791925, 0.904125, 0.99167, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_hy6hi"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nudld"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_54ixs"]
+albedo_color = Color(0.717647, 0.894118, 1, 1)
+metallic = 0.5
+roughness = 0.5
+emission = Color(0.791925, 0.904125, 0.99167, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3xc58"]
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(1, 1, 1)
+spread = 126.818
+flatness = 0.627
+initial_velocity_max = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_re1db"]
+size = Vector3(0.02, 0.02, 0.02)
+
+[node name="Bubble" type="Area3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_1fp0o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ma2mw")
+transparency = 0.5
+mesh = SubResource("SphereMesh_hy6hi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_nudld")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_54ixs")
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_3xc58")
+draw_pass_1 = SubResource("BoxMesh_re1db")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

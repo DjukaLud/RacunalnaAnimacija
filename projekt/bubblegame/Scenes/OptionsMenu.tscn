@@ -1,0 +1,116 @@
+[gd_scene load_steps=9 format=3 uid="uid://dih22vpwg88in"]
+
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_23s4f"]
+[ext_resource type="Texture2D" uid="uid://b0regi0oh272i" path="res://Assets/ground3.jpg" id="2_tocul"]
+[ext_resource type="Script" path="res://Scripts/bubble_spawner.gd" id="3_fqkxy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hej6l"]
+albedo_color = Color(0, 0.579528, 0.166425, 1)
+albedo_texture = ExtResource("2_tocul")
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_68wtm"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_embbo"]
+sky_material = SubResource("ProceduralSkyMaterial_68wtm")
+
+[sub_resource type="Environment" id="Environment_v4dcy"]
+background_mode = 2
+sky = SubResource("Sky_embbo")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ro51y"]
+script/source = "extends VBoxContainer
+
+@onready var player = load(\"res://Scenes/Player.tscn\")
+
+func _ready() -> void:
+	$OneMinButton.grab_focus()
+	
+	
+func _on_one_min_button_pressed() -> void:
+	player.countdown_time = 60
+
+
+func _on_two_min_button_pressed() -> void:
+	player.countdown_time = 120
+
+
+func _on_five_min_button_pressed() -> void:
+	player.countdown_time = 300
+
+
+func _on_back_button_pressed() -> void:
+	var scene = load(\"res://Scenes/MainMenu.tscn\").instantiate()
+	get_tree().root.add_child(scene) 
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = scene
+"
+
+[node name="OptionsMenu" type="Node3D"]
+script = ExtResource("1_23s4f")
+
+[node name="Terrain" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_hej6l")
+snap = 1e-06
+use_collision = true
+size = Vector3(19, 0.1, 19)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.763072, -0.559724, 0.323156, 0, 0.499998, 0.866026, -0.646313, 0.660841, -0.381535, -1.43284, 22.7039, -29.7382)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v4dcy")
+
+[node name="BubbleSpawner" type="Node3D" parent="."]
+script = ExtResource("3_fqkxy")
+
+[node name="Timer" type="Timer" parent="BubbleSpawner"]
+autostart = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42833, 9.10378)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -99.5
+offset_right = 206.0
+offset_bottom = 99.5
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ro51y")
+
+[node name="OneMinButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "1 Minute"
+
+[node name="TwoMinButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "2 Minutes"
+
+[node name="FiveMinButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "5 Minutes"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="timeout" from="BubbleSpawner/Timer" to="BubbleSpawner" method="_on_timer_timeout"]
+[connection signal="pressed" from="VBoxContainer/OneMinButton" to="VBoxContainer" method="_on_one_min_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TwoMinButton" to="VBoxContainer" method="_on_two_min_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/FiveMinButton" to="VBoxContainer" method="_on_five_min_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="VBoxContainer" method="_on_back_button_pressed"]
